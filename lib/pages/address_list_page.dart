@@ -137,6 +137,15 @@ class AddressListPageState extends State<AddressListPage> {
             pinned: true,
             backgroundColor: Colors.white,
             elevation: 0.0,
+            leading: IconButton(
+              onPressed: (){
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(IconUtil.arrowLeft),
+              iconSize: 18,
+              color: Colors.black,
+              padding: const EdgeInsets.all(0),
+            ),
             title: Text(
               '收货地址',
               style: TextStyle(color: Colors.black),

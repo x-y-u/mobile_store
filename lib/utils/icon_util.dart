@@ -101,4 +101,20 @@ class IconUtil{
       0xe65c,
       fontFamily: 'iconfont'
   );
+  static const IconData password = IconData(
+      0xed75,
+      fontFamily: 'iconfont'
+  );
+  static const IconData account = IconData(
+      0xe68a,
+      fontFamily: 'iconfont'
+  );
+  static const IconData edit = IconData(
+      0xe67f,
+      fontFamily: 'iconfont'
+  );
+  static const IconData phone = IconData(
+      0xe680,
+      fontFamily: 'iconfont'
+  );
 }

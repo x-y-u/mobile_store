@@ -166,9 +166,14 @@ class _MinePageState extends State<MinePage>
                 child: Text("商品详情"),
               ),
               ElevatedButton(onPressed: (){
-                Navigator.of(context).pushNamed('add_map');
+                Navigator.of(context).pushNamed('add_address');
               },
                 child: Text("添加地址"),
+              ),
+              ElevatedButton(onPressed: (){
+                Navigator.of(context).pushNamed('address_list');
+              },
+                child: Text("地址列表"),
               ),
             ],
           ),

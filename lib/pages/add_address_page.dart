@@ -30,41 +30,45 @@ class AddAddressPageState extends State<AddAddressPage> {
   add() async {
     if(nameController.text == ''){
       Fluttertoast.showToast(
-          msg: "请输入姓名",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          textColor: Colors.black
+        msg: "请输入姓名",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        textColor: Colors.black,
+        backgroundColor: const Color(0x55616161),
       );
       return;
     }
     if(phoneController.text == ''){
       Fluttertoast.showToast(
-          msg: "请输入手机号码",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          textColor: Colors.black
+        msg: "请输入手机号码",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        textColor: Colors.black,
+        backgroundColor: const Color(0x55616161),
       );
       return;
     }
     if(detailController.text == ''){
       Fluttertoast.showToast(
-          msg: "请输入详细地址",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          textColor: Colors.black
+        msg: "请输入详细地址",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        textColor: Colors.black,
+        backgroundColor: const Color(0x55616161),
       );
       return;
     }
     if(province == ''){
       Fluttertoast.showToast(
-          msg: "请选择地区",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          textColor: Colors.black
+        msg: "请选择地区",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        textColor: Colors.black,
+        backgroundColor: const Color(0x55616161),
       );
       return;
     }
@@ -182,9 +186,9 @@ class AddAddressPageState extends State<AddAddressPage> {
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width - 30,
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                            color: Theme.of(context).primaryColor,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                            color: Colors.redAccent,
                           ),
                           alignment: Alignment.center,
                           margin: const EdgeInsets.only(left: 10.0, right: 10.0),

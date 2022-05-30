@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_store/pages/account_settingh_page.dart';
 import 'package:mobile_store/pages/add_address_page.dart';
+import 'package:mobile_store/pages/address_list_page.dart';
 import 'package:mobile_store/pages/prtoduct_details_page.dart';
 import 'package:mobile_store/pages/setting_page.dart';
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         'setting': (BuildContext context) => const SettingPage(),
         'account_setting': (BuildContext context) => const AccountSettingPage(),
         'add_address': (BuildContext context) => const AddAddressPage(),
+        'address_list': (BuildContext context) => const AddressListPage(),
       },
       home: const HomePage(),
     );
