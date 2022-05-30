@@ -43,27 +43,30 @@ class _OrderListItemState extends State<OrderListItem> {
             margin: const EdgeInsets.only(top: 15),
             child: Row(
               children: [
-                GestureDetector(
-                  onTap: (){
+                Expanded(
+                  child: GestureDetector(
+                    onTap: (){
 
-                  },
-                  child: Row(
-                    children: [
-                      Text(widget.data.storeName!,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                    },
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 10),
+                        Text(widget.data.storeName!,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(width: 3),
-                      const Icon(
-                        IconUtil.arrowRight,
-                        size: 13,
-                        color: Colors.black,
-                      )
-                    ],
+                        const SizedBox(width: 3),
+                        const Icon(
+                          IconUtil.arrowRight,
+                          size: 13,
+                          color: Colors.black,
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(width: 20),
@@ -99,12 +102,12 @@ class _OrderListItemState extends State<OrderListItem> {
                   ),
                   Expanded(
                     child: Container(
-                      alignment: Alignment.center,
+                      alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.only(left: 5,right: 30),
                       child: Text(
                         widget.data.productName!,
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           color: Colors.black,
                         ),
                         maxLines: 2,
@@ -140,9 +143,9 @@ class _OrderListItemState extends State<OrderListItem> {
                           ),
                         ),
                         Text("共${widget.data.num}件",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 10,
-                            color: Colors.grey,
+                            color: Colors.grey.shade600,
                           ),
                         )
                       ],
@@ -156,6 +159,7 @@ class _OrderListItemState extends State<OrderListItem> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const SizedBox(width: 10),
                 const Text("更多",
                   style: TextStyle(
                     fontSize: 13,
@@ -194,24 +198,24 @@ class _OrderListItemState extends State<OrderListItem> {
         break;
     }
     return Text(state,
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 14,
-        color: Colors.grey,
+        color: Colors.grey.shade600,
       ),
     );
   }
 
   Widget _buildButton(String text,Color color){
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.only(left:10,right: 10,top: 3,bottom: 3),
       margin: const EdgeInsets.only(left: 5,right: 5),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(25)),
-        border: Border.all(color: color, width: 0.8,)
+        border: Border.all(color: color, width: 0.5,)
       ),
       child: Text(text,
         style: TextStyle(
-          fontSize: 18,
+          fontSize: 13,
           color: color,
         ),
       ),

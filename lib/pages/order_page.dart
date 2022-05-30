@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_store/components/order_list_item.dart';
+import 'package:mobile_store/components/order_list.dart';
 import 'package:mobile_store/model/order.dart';
 import 'package:mobile_store/utils/icon_util.dart';
 
@@ -23,7 +22,7 @@ class _OrderPageState extends State<OrderPage>
 
   List<String> options = [
     "全部",
-    "已完成",
+    "待付款",
     "待收货",
     "已完成",
     "已取消",
@@ -159,20 +158,16 @@ class _OrderPageState extends State<OrderPage>
   }
 
   Widget _buildContent(){
-    return loading?Expanded(
-      child: ListView.builder(
-        itemCount: _datas.length,
-        itemBuilder: (context,index){
-          return OrderListItem(data: _datas[index]);
-        }
-      ),
-    ) :const Center(
-      child: SizedBox(
-        width: 30.0,
-        height: 30.0,
-        child: CircularProgressIndicator(
-          strokeWidth: 2,
-        ),
+    return Expanded(
+      child: TabBarView(
+        controller: _controller,
+        children: const [
+          OrderList(index: 0),
+          OrderList(index: 1),
+          OrderList(index: 2),
+          OrderList(index: 3),
+          OrderList(index: 4),
+        ],
       ),
     );
   }
