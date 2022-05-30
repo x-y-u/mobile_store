@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:cookie_jar/cookie_jar.dart';
+
 ///网络请求
 
 class HttpUtil{
@@ -21,20 +20,6 @@ class HttpUtil{
       responseType: ResponseType.json,
     );
     _dio = Dio(baseOptions);
-    var cookieJar=CookieJar();
-    _dio?.interceptors.add(CookieManager(cookieJar));
-  }
-
-  Future postRequestWithJson(String url,{String method = "post",Map<String,dynamic>? data}) async{
-    Options options = Options(method: method);
-    try{
-      final response =  await _dio?.post(url,data: data,options: options);
-      return response;
-    } on DioError catch(error){
-      throw error;
-    }
-
-
   }
 
   // 请求(默认post)

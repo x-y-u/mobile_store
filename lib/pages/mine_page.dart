@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mobile_store/model/global_model/user_state.dart';
-import 'package:mobile_store/http/HttpUtil.dart';
-
-import 'package:mobile_store/pages/login_page.dart';
+import 'package:mobile_store/model/product.dart';
 import 'package:mobile_store/pages/prtoduct_details_page.dart';
 import 'package:mobile_store/utils/icon_util.dart';
 import 'package:mobile_store/utils/login_util.dart';
@@ -79,8 +75,7 @@ class _MinePageState extends State<MinePage>
   void _initLogin() async{
     bool isLogin = await LoginUtil.getIsLogin();
     if(isLogin){
-      print(isLogin);
-      Provider.of<UserStateModel>(context,listen: false).login();
+      Provider.of<UserStateModel>(context).login();
     }
   }
 
@@ -94,16 +89,9 @@ class _MinePageState extends State<MinePage>
             children: [
               const SizedBox(height: 40),
               ListTile(
-                leading: InkWell(
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(90)),
-                    child: Image.asset("assets/images/head_image1.jpg"),
-                  ),
-                  onTap:(){
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context)=>LoginPage())
-                    );
-                  }
+                leading: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(90)),
+                  child: Image.asset("assets/images/head_image1.jpg"),
                 ),
                 title: const Text("标题"),
                 subtitle: const Text("content"),
@@ -200,15 +188,6 @@ class _MinePageState extends State<MinePage>
                 Navigator.of(context).pushNamed('address_list');
               },
                 child: Text("地址列表"),
-              ),
-              ElevatedButton(onPressed: (){
-                HttpUtil().get_requset("/user-auth/test")
-                    .then((value){
-                  print(value.data);
-
-                });
-              },
-                child: Text("登陆状态"),
               ),
             ],
           ),
