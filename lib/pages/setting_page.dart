@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mobile_store/http/HttpUtil.dart';
 import 'package:mobile_store/utils/icon_util.dart';
 import 'package:mobile_store/utils/no_ripple_scroll_behavior.dart';
-
+import '../model/product.dart';
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
 
@@ -230,6 +232,14 @@ class _SettingPageState extends State<SettingPage> {
 
   Widget _buildLogoutButton(){
     return InkWell(
+      onTap: (){
+        HttpUtil().get_requset("/logout").then((value) {
+          Product data = Product.fromJson(value.data);
+          if(data.code==20000){//退出成功的操作
+              _showDialog("退出成功");
+          }
+        });
+      },
       child:Container(
         width: _screenWidth,
         height: 45,
@@ -256,7 +266,16 @@ class _SettingPageState extends State<SettingPage> {
       color: Colors.grey.shade200,
     );
   }
-
+  void _showDialog(String errorMsg) {
+    Fluttertoast.showToast(
+        msg: errorMsg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        textColor: Colors.black,
+        backgroundColor: const Color(0x55616161)
+    );
+  }
   Widget _buildSettingItem(String option,String route){
     return SizedBox(
       height: 45,
