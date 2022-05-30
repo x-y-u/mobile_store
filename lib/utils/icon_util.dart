@@ -117,4 +117,9 @@ class IconUtil{
       0xe680,
       fontFamily: 'iconfont'
   );
+  static const IconData add = IconData(
+      0xe6da,
+      fontFamily: 'iconfont'
+  );
+
 }

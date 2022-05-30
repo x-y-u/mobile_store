@@ -8,7 +8,7 @@ class Cart{
 }
 
 class CartItem{
-  String? id;
+  int? id;
   String? name;
   String? category;
   double? price;

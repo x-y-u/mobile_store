@@ -10,15 +10,12 @@ class Cart{
   int? code;
 
   @JsonKey(name: 'data')
-  List<CartData>? data;
+  CartData? data;
 
   @JsonKey(name: 'msg')
   String? msg;
 
-  @JsonKey(name: 'total')
-  int? total;
-
-  Cart({this.code,this.data,this.msg,this.total});
+  Cart({this.code,this.data,this.msg});
 
   factory Cart.fromJson(Map<String, dynamic> srcJson) => _$CartFromJson(srcJson);
 
@@ -33,16 +30,10 @@ class CartData{
   @JsonKey(name: 'Id')
   int? id;
 
-  @JsonKey(name: 'shopName')
-  String? shopName;
-
-  @JsonKey(name: 'Img')
-  String? img;
-
   @JsonKey(name: 'Children')
-  List<Children>? children;
+  List<CartItem>? children;
 
-  CartData({this.id,this.shopName,this.img,this.children});
+  CartData({this.id = 0, this.children});
 
   factory CartData.fromJson(Map<String, dynamic> srcJson) => _$CartDataFromJson(srcJson);
 
@@ -51,25 +42,35 @@ class CartData{
 
 
 @JsonSerializable()
-class Children{
+class CartItem{
 
-  @JsonKey(name: 'Id')
+  @JsonKey(name: 'id')
   int? id;
 
   @JsonKey(name: 'goodsName')
   String? goodsName;
 
-  @JsonKey(name: 'ParentId')
+  @JsonKey(name: 'parentId')
   int? parentId;
 
   @JsonKey(name: 'Img')
   String? img;
 
-  Children({this.id,this.goodsName,this.parentId,this.img});
+  @JsonKey(name: 'shopName')
+  String? shopName;
 
-  factory Children.fromJson(Map<String, dynamic> srcJson) => _$ChildrenFromJson(srcJson);
+  @JsonKey(name: 'price')
+  double? price;
 
-  Map<String, dynamic> toJson() => _$ChildrenToJson(this);
+  @JsonKey(name: 'num')
+  int? num;
+
+  CartItem({this.id,this.goodsName,this.parentId,this.img,
+    this.num,this.price,this.shopName});
+
+  factory CartItem.fromJson(Map<String, dynamic> srcJson) => _$CartItemFromJson(srcJson);
+
+  Map<String, dynamic> toJson() => _$CartItemToJson(this);
 
 }
 

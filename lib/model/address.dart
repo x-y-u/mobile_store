@@ -23,6 +23,6 @@ class AddressData{
 
   String? phone;
 
-  AddressData({this.id, this.userId, this.name, this.isDefault, this.province,
-      this.city, this.area, this.detail, this.phone});
+  AddressData({this.id, this.userId, this.name = "", this.isDefault = false, this.province = "",
+      this.city = "", this.area = "", this.detail = "", this.phone = ""});
 }

@@ -11,7 +11,6 @@ class AddAddressPage extends StatefulWidget {
 }
 
 class AddAddressPageState extends State<AddAddressPage> {
-  AddAddressPageState();
   bool isDefault = false; // 是否默认地址
   String province = ''; // 省
   String city = ''; // 市

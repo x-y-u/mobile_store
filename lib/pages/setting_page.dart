@@ -170,7 +170,7 @@ class _SettingPageState extends State<SettingPage> {
             ),
           ),
           _buildDevider(),
-          _buildSettingItem("地址管理", ""),
+          _buildSettingItem("地址管理", 'address_list'),
         ],
       ),
     );

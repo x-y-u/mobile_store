@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_store/bean/cartBean.dart';
+import 'package:mobile_store/model/cart.dart' as cart_json;
+import 'package:mobile_store/pages/confirm_order.dart';
 import 'package:mobile_store/utils/icon_util.dart';
 import 'package:mobile_store/utils/no_ripple_scroll_behavior.dart';
 
@@ -221,7 +223,26 @@ class _ShoppingCartPageState extends State<ShoppingCartPage>
           Align(
             alignment: Alignment.centerRight,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                cart_json.CartData data = cart_json.CartData();
+                data.children = [];
+                for(Cart cart in carts){
+                  for(CartItem item in cart.items!){
+                    if(item.isSelected!){
+                      data.children!.add(cart_json.CartItem(
+                        id: item.id,shopName: cart.shopName,
+                        goodsName: item.name,img: item.imageUrl,
+                        price: item.price,num: item.num
+                      ));
+                    }
+                  }
+                }
+                if(data.children!.isNotEmpty){
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context)=>ConfirmOrderPage(data: data)),
+                  );
+                }
+              },
               style: ButtonStyle(
                 shape: MaterialStateProperty.all(
                   const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25)),),

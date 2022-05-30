@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_store/pages/EditAddressPage.dart';
 
 import '../model/address.dart';
+import '../utils/icon_util.dart';
 
 class AddressListPage extends StatefulWidget {
   const AddressListPage({Key? key}) :super(key: key);
@@ -21,71 +23,52 @@ class AddressListPageState extends State<AddressListPage> {
   }
 
   void _getAddress() async{
-    addressList = [];
+    addressList = [
+      AddressData(name: "xyu",isDefault: false,
+        province: "四川",city: "成都",area: "绵阳",
+        phone: "1254716754", detail: "四川大学",
+      ),
+      AddressData(name: "xyu",isDefault: true,
+        province: "四川",city: "成都",area: "绵阳",
+        phone: "1254716754", detail: "四川大学",
+      ),
+      AddressData(name: "xyu",isDefault: false,
+        province: "四川",city: "成都",area: "绵阳",
+        phone: "1254716754", detail: "四川大学",
+      ),
+      AddressData(name: "xyu",isDefault: false,
+        province: "四川",city: "成都",area: "绵阳",
+        phone: "1254716754", detail: "四川大学",
+      ),
+      AddressData(name: "xyu",isDefault: false,
+        province: "四川",city: "成都",area: "绵阳",
+        phone: "1254716754", detail: "四川大学",
+      ),
+    ];
     setState(() {
     });
   }
 
   listUI() {
-    List<Widget> itemList = [];
-    addressList.map((item) {
-      itemList.add(
-        Dismissible(
-          direction: DismissDirection.endToStart,
-          key: Key(item.id.toString()),
-          secondaryBackground: Container(
-            color: Colors.red,
-            padding: const EdgeInsets.only(right: 20.0),
-            alignment: Alignment.centerRight,
-            child: const Icon(Icons.delete,color: Colors.white,),
-          ),
-          background: Container(
-            alignment: Alignment.centerRight,
-            color: Colors.green,
-            child: const Icon(Icons.delete),
-          ),
-          confirmDismiss: (direction) async {
-            if (direction == DismissDirection.endToStart) {
-              showDialog(
-                  context: context,
-                  builder:(BuildContext context){
-                    return AlertDialog(
-                      title: Text('提示'),
-                      content: Text("确定删除？"),
-                      actions: <Widget>[
-                        new FlatButton(
-                          child: new Text('取消'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        new FlatButton(
-                          child: new Text('确定'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  }
-              );
-            }
-          },
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.grey.shade100))),
-            padding:
-            EdgeInsets.only(left: 8.0, right: 8.0, top: 12.0, bottom: 12.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
+    List<Widget> itemList = addressList.map((item) =>
+        Container(
+          decoration: BoxDecoration(
+              border: Border(bottom: BorderSide(color: Colors.grey.shade100))),
+          padding:
+          EdgeInsets.only(left: 8.0, right: 8.0, top: 12.0, bottom: 12.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              const SizedBox(width: 10),
+              Expanded(
+                child: Container(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
+                          const SizedBox(width: 5),
                           Text(
                             item.name!,
                             style: TextStyle(fontSize: 18.0),
@@ -96,17 +79,17 @@ class AddressListPageState extends State<AddressListPage> {
                           Text(item.phone!,
                               style: TextStyle(
                                   fontSize: 16.0, color: Colors.grey)),
-                          item.isDefault == 1
+                          item.isDefault!
                               ? Container(
-                            margin: EdgeInsets.only(left: 3.0),
+                            margin: EdgeInsets.only(left: 5.0),
                             decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
+                                color: Colors.redAccent,
                                 borderRadius: BorderRadius.all(
                                     Radius.circular(5.0))),
-                            padding: EdgeInsets.all(2.0),
+                            padding: EdgeInsets.only(left: 5,right: 5,top: 1,bottom: 1),
                             child: Text('默认',
                                 style: TextStyle(
-                                    fontSize: 14.0, color: Colors.white)),
+                                    fontSize: 12.0, color: Colors.white)),
                           )
                               : Container()
                         ],
@@ -118,13 +101,25 @@ class AddressListPageState extends State<AddressListPage> {
                           style: TextStyle(fontSize: 16.0, color: Colors.grey))
                     ],
                   ),
-                )
-              ],
-            ),
+                ),
+              ),
+              IconButton(
+                onPressed: () async {
+                  AddressData data = await Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context)=>EditAddressPage(data: item))
+                  );
+                  item = data;
+                  setState(() {
+                  });
+                },
+                icon: Icon(IconUtil.edit),
+                iconSize: 20,
+                color: Colors.grey,
+              )
+            ],
           ),
-        ),
-      );
-    }).toList();
+        )
+    ).toList();
     return itemList;
   }
 
@@ -146,29 +141,19 @@ class AddressListPageState extends State<AddressListPage> {
               color: Colors.black,
               padding: const EdgeInsets.all(0),
             ),
-            title: Text(
+            title: const Text(
               '收货地址',
               style: TextStyle(color: Colors.black),
             ),
             actions: <Widget>[
-              Align(
-                child: Container(
-                  margin: const EdgeInsets.only(right: 10.0),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('add_address')
-                          .then((value) {
-                         setState(() {
-                         });
-                      });
-                    },
-                    child: const Text(
-                      '新增地址',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                  ),
-                ),
-              ),
+              IconButton(
+                onPressed: (){
+                  Navigator.of(context).pushNamed('add_address');
+                },
+                icon: const Icon(IconUtil.add),
+                iconSize: 25,
+                color: Colors.black,
+              )
             ],
           ),
           SliverPadding(
