@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:mobile_store/http/HttpUtil.dart';
 
 import '../model/order.dart';
 import 'order_list_item.dart';
@@ -33,21 +32,6 @@ class _OrderListState extends State<OrderList> with AutomaticKeepAliveClientMixi
   }
 
   void _getDatas(int index) async{
-    var state;
-    if(index>0)
-      state = index-1;
-    else
-      state = null;
-    HttpUtil().get_param_requset(
-        "/order/",
-        params: {
-          "state":state
-        }
-    ).then((value){
-
-    }).catchError((error){
-
-    });
     _datas = [
       OrderData(storeName: "三只松鼠",
         imgUrl: "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
