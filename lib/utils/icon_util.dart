@@ -93,4 +93,12 @@ class IconUtil{
       0xe685,
       fontFamily: 'iconfont'
   );
+  static const IconData share = IconData(
+      0xe764,
+      fontFamily: 'iconfont'
+  );
+  static const IconData search = IconData(
+      0xe65c,
+      fontFamily: 'iconfont'
+  );
 }

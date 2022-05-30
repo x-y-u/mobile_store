@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_store/model/product.dart';
+import 'package:mobile_store/pages/prtoduct_details.dart';
 import 'package:mobile_store/utils/icon_util.dart';
+
+import 'order_page.dart';
 
 class MinePage extends StatefulWidget {
   const MinePage({Key? key}) : super(key: key);
@@ -14,22 +18,27 @@ class _MinePageState extends State<MinePage> {
     {
       "icon":IconUtil.unpaid,
       "label":"待付款",
+      "index":1
     },
     {
       "icon":IconUtil.unreceived,
       "label":"待收货",
+      "index":2
     },
     {
       "icon":IconUtil.unevaluated,
       "label":"待评价",
+      "index":-1
     },
     {
       "icon":IconUtil.afterSale,
       "label":"退款/售后",
+      "index":-1
     },
     {
       "icon":IconUtil.order,
       "label":"订单",
+      "index":0
     },
   ];
   List<Map> options2 = [
@@ -125,7 +134,13 @@ class _MinePageState extends State<MinePage> {
                                 IconButton(
                                   // highlightColor: Colors.transparent, // 透明色
                                   // splashColor: Colors.transparent, // 透明色
-                                  onPressed: (){},
+                                  onPressed: (){
+                                    if(e["index"]!=-1){
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context)=>OrderPage(index: e["index"],))
+                                      );
+                                    }
+                                  },
                                   icon: Icon(e["icon"]),
                                   iconSize: 23,
                                 ),
@@ -138,6 +153,13 @@ class _MinePageState extends State<MinePage> {
                     )
                   ],
                 ),
+              ),
+              ElevatedButton(onPressed: (){
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context)=>ProductDetailPage(id:1))
+                );
+              },
+                child: Text("商品详情"),
               )
             ],
           ),

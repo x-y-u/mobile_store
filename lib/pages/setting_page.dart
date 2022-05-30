@@ -145,7 +145,9 @@ class _SettingPageState extends State<SettingPage> {
           SizedBox(
             height: 90,
             child: InkWell(
-              onTap: (){},
+              onTap: (){
+                Navigator.of(context).pushNamed('account_setting');
+              },
               child: Row(
                 children: [
                   Expanded(
