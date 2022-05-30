@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_store/http/HttpUtil.dart';
+import 'package:mobile_store/model/global_model/address_model.dart';
 import 'package:mobile_store/model/global_model/user_state.dart';
 import 'package:mobile_store/pages/account_settingh_page.dart';
 import 'package:mobile_store/pages/add_address_page.dart';
@@ -23,6 +24,9 @@ void main() async{
       providers: [
         ChangeNotifierProvider<UserStateModel>(create: (_) {
           return UserStateModel();
+        }),
+        ChangeNotifierProvider<AddressModel>(create: (_) {
+          return AddressModel();
         }),
       ],
       child: const MyApp(),

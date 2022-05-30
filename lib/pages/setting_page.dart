@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobile_store/http/HttpUtil.dart';
 import 'package:mobile_store/utils/icon_util.dart';
+import 'package:mobile_store/utils/login_util.dart';
 import 'package:mobile_store/utils/no_ripple_scroll_behavior.dart';
+import 'package:provider/provider.dart';
+import '../model/global_model/user_state.dart';
 import '../model/product.dart';
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -234,9 +237,10 @@ class _SettingPageState extends State<SettingPage> {
     return InkWell(
       onTap: (){
         HttpUtil().get_requset("/logout").then((value) {
-          Product data = Product.fromJson(value.data);
-          if(data.code==20000){//退出成功的操作
+          if(value.data['code']==20000){//退出成功的操作
               _showDialog("退出成功");
+              LoginUtil.logout();
+              Provider.of<UserStateModel>(context,listen: false).logout();
           }
         });
       },

@@ -1,10 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mobile_store/http/HttpUtil.dart';
 import 'package:mobile_store/utils/no_ripple_scroll_behavior.dart';
+import 'package:mobile_store/utils/toast_util.dart';
+import 'package:provider/provider.dart';
 
 import '../model/cart.dart';
 import '../model/address.dart';
+import '../model/global_model/address_model.dart';
 import '../utils/icon_util.dart';
 
 class ConfirmOrderPage extends StatefulWidget {
@@ -39,7 +43,7 @@ class ConfirmOrderPageState extends State<ConfirmOrderPage> {
       phone: "1254716754", detail: "四川大学",
     );
 
-    cartList = widget.data.children!;
+    cartList = widget.data.goods!;
     for(CartItem item in cartList){
       total += item.price! * item.num!;
     }
@@ -115,7 +119,7 @@ class ConfirmOrderPageState extends State<ConfirmOrderPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(height: 10),
-                        Text(item.goodsName!,
+                        Text(item.name!,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(fontSize: 18.0)),
@@ -289,14 +293,28 @@ class ConfirmOrderPageState extends State<ConfirmOrderPage> {
       ),
       bottomNavigationBar: ElevatedButton(
         onPressed: () {
-          Fluttertoast.showToast(
-            msg: "支付成功",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            textColor: Colors.black,
-            backgroundColor: const Color(0x55616161),
-          );
+          ToastUtil.makeToast("支付成功");
+          HttpUtil().get_param_requset(
+            "/shopping-cart/",
+            params: {
+              'ids':cartList.map((e) => e.id!).toList()
+            },
+            method: "delete",
+          ).catchError((error){
+            print(error);
+          });
+          HttpUtil().postRequestWithJson(
+            "/shopping-cart/buy",
+            data: {
+              'address': Provider.of<AddressModel>(context,listen: false).address.toString(),
+              'goods': cartList.map((e) => {
+                'goodId':e.id!,
+                'num': e.num!,
+              }).toList()
+            }
+          ).catchError((error){
+            print(error);
+          });
           Navigator.of(context).pop();
         },
         style: ButtonStyle(

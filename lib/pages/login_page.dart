@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mobile_store/model/global_model/user_state.dart';
 import 'package:mobile_store/utils/icon_util.dart';
 import 'package:mobile_store/utils/login_util.dart';
+import 'package:provider/provider.dart';
 
 import '../http/HttpUtil.dart';
 import '../model/product.dart';
@@ -280,12 +282,12 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             "password":passwordController.text
           }
       ).then((result){
-         Product product = Product.fromJson(result.data);
-         if(product.code==20000){//登录成功的操作
+         if(result.data['code']==20000){//登录成功的操作
            LoginUtil.loginNewAccount(accountNumberController.text, passwordController.text);
+           Provider.of<UserStateModel>(context,listen: false).login();
            Navigator.of(context).pop();
          }else{
-           _showDialog(product.message??"");
+           _showDialog(result.data['message']??"");
          }
       }).catchError((error){
         print(error);

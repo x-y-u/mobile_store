@@ -81,6 +81,8 @@ class _MinePageState extends State<MinePage>
     if(isLogin){
       print(isLogin);
       Provider.of<UserStateModel>(context,listen: false).login();
+      setState(() {
+      });
     }
   }
 
@@ -93,20 +95,30 @@ class _MinePageState extends State<MinePage>
           Column(
             children: [
               const SizedBox(height: 40),
-              ListTile(
-                leading: InkWell(
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(90)),
-                    child: Image.asset("assets/images/head_image1.jpg"),
-                  ),
-                  onTap:(){
-                    Navigator.of(context).push(
+              InkWell(
+                onTap:() async {
+                  if(Provider.of<UserStateModel>(context,listen: false).isLogin){
+                    Navigator.of(context).pushNamed('account_setting');
+                  }else{
+                    await Navigator.of(context).push(
                         MaterialPageRoute(builder: (context)=>LoginPage())
                     );
+                    setState(() {
+                    });
                   }
+                },
+                child: ListTile(
+                  leading: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(90)),
+                    child: Provider.of<UserStateModel>(context,listen: false).isLogin?
+                    Image.asset("assets/images/head_image1.jpg")
+                        :const Icon(Icons.image),
+                  ),
+                  title: Text(Provider.of<UserStateModel>(context,listen: false).isLogin
+                      ?"一名用户":"点击登录"
+                  ),
+                  subtitle: const Text("content"),
                 ),
-                title: const Text("标题"),
-                subtitle: const Text("content"),
               ),
               Container(
                 height: 105.5,
@@ -222,8 +234,10 @@ class _MinePageState extends State<MinePage>
                   const Icon(IconUtil.addFriend,size: 23,),
                   const SizedBox(width: 8),
                   InkWell(
-                    onTap: (){
-                      Navigator.of(context).pushNamed('setting');
+                    onTap: () async{
+                      await Navigator.of(context).pushNamed('setting');
+                      setState(() {
+                      });
                     },
                     child: const Icon(IconUtil.setting,size: 23,),
                   ),

@@ -1,21 +1,19 @@
 /// 1.引入json_annotation
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mobile_store/model/product.dart';
 
 part 'cart.g.dart';
 
 @JsonSerializable()
 class Cart{
 
-  @JsonKey(name: 'code')
-  int? code;
+  @JsonKey(name: 'recordList')
+  List<CartData>? recordList;
 
-  @JsonKey(name: 'data')
-  CartData? data;
+  @JsonKey(name: 'count')
+  int? count;
 
-  @JsonKey(name: 'msg')
-  String? msg;
-
-  Cart({this.code,this.data,this.msg});
+  Cart({this.recordList,this.count = 0});
 
   factory Cart.fromJson(Map<String, dynamic> srcJson) => _$CartFromJson(srcJson);
 
@@ -27,13 +25,20 @@ class Cart{
 @JsonSerializable()
 class CartData{
 
-  @JsonKey(name: 'Id')
+  @JsonKey(name: 'id')
   int? id;
 
-  @JsonKey(name: 'Children')
-  List<CartItem>? children;
+  @JsonKey(name: 'store')
+  Store? store;
 
-  CartData({this.id = 0, this.children});
+  @JsonKey(name: 'goods')
+  List<CartItem>? goods;
+
+  @JsonKey(name: 'num')
+  int? num;
+
+
+  CartData({this.id, this.num = 0, this.store, this.goods});
 
   factory CartData.fromJson(Map<String, dynamic> srcJson) => _$CartDataFromJson(srcJson);
 
@@ -47,17 +52,11 @@ class CartItem{
   @JsonKey(name: 'id')
   int? id;
 
-  @JsonKey(name: 'goodsName')
-  String? goodsName;
+  @JsonKey(name: 'name')
+  String? name;
 
-  @JsonKey(name: 'parentId')
-  int? parentId;
-
-  @JsonKey(name: 'Img')
+  @JsonKey(name: 'picture')
   String? img;
-
-  @JsonKey(name: 'shopName')
-  String? shopName;
 
   @JsonKey(name: 'price')
   double? price;
@@ -65,8 +64,8 @@ class CartItem{
   @JsonKey(name: 'num')
   int? num;
 
-  CartItem({this.id,this.goodsName,this.parentId,this.img,
-    this.num,this.price,this.shopName});
+  CartItem({this.id,this.name,this.img,
+    this.num,this.price});
 
   factory CartItem.fromJson(Map<String, dynamic> srcJson) => _$CartItemFromJson(srcJson);
 

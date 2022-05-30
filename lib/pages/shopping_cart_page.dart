@@ -1,9 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_store/bean/cartBean.dart';
+import 'package:mobile_store/http/HttpUtil.dart';
 import 'package:mobile_store/model/cart.dart' as cart_json;
 import 'package:mobile_store/pages/confirm_order.dart';
 import 'package:mobile_store/utils/icon_util.dart';
 import 'package:mobile_store/utils/no_ripple_scroll_behavior.dart';
+import 'package:provider/provider.dart';
+
+import '../model/global_model/address_model.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   const ShoppingCartPage({Key? key}) : super(key: key);
@@ -21,70 +26,102 @@ class _ShoppingCartPageState extends State<ShoppingCartPage>
   String defaultImage = "assets/images/head_image1.jpg";
   bool _isAllSelected = false;
   double _totalPrice = 0;
-  List<Cart> carts = [
-    Cart(
-      shopName: "三只松鼠旗舰店",
-      items: [
-        CartItem(
-          name: "开心果",
-          category: "500g/罐装",
-          num: 1,
-          price: 13.99,
-          imageUrl: "assets/images/head_image1.jpg"
-        ),
-        CartItem(
-            name: "葡萄干",
-            category: "500g/罐装",
-            num: 1,
-            price: 33.99,
-            imageUrl: "assets/images/head_image2.jpg"
-        ),
-      ]
-    ),
-    Cart(
-        shopName: "三只松鼠旗舰店",
-        items: [
-          CartItem(
-              name: "黄桃干",
-              category: "500g/罐装",
-              num: 1,
-              price: 45.99,
-              imageUrl: "assets/images/head_image3.jpg"
-          ),
-        ]
-    ),
-    Cart(
-        shopName: "三只松鼠旗舰店",
-        items: [
-          CartItem(
-              name: "芒果干",
-              category: "500g/罐装",
-              num: 1,
-              price: 99.99,
-              imageUrl: "assets/images/head_image4.jpg"
-          ),
-        ]
-    ),
-    Cart(
-        shopName: "三只松鼠旗舰店",
-        items: [
-          CartItem(
-              name: "开心果",
-              category: "500g/罐装",
-              num: 1,
-              price: 13.99,
-              imageUrl: "assets/images/head_image1.jpg"
-          ),
-          CartItem(
-              name: "葡萄干",
-              category: "500g/罐装",
-              num: 1,
-              price: 33.99,
-              imageUrl: "assets/images/head_image2.jpg"
-          ),
-        ]
-    ),
-  ];
+  late List<Cart> carts;
+  // List<Cart> carts = [
+  //   Cart(
+  //     shopName: "三只松鼠旗舰店",
+  //     items: [
+  //       CartItem(
+  //         name: "开心果",
+  //         category: "500g/罐装",
+  //         num: 1,
+  //         price: 13.99,
+  //         imageUrl: "assets/images/head_image1.jpg"
+  //       ),
+  //       CartItem(
+  //           name: "葡萄干",
+  //           category: "500g/罐装",
+  //           num: 1,
+  //           price: 33.99,
+  //           imageUrl: "assets/images/head_image2.jpg"
+  //       ),
+  //     ]
+  //   ),
+  //   Cart(
+  //       shopName: "三只松鼠旗舰店",
+  //       items: [
+  //         CartItem(
+  //             name: "黄桃干",
+  //             category: "500g/罐装",
+  //             num: 1,
+  //             price: 45.99,
+  //             imageUrl: "assets/images/head_image3.jpg"
+  //         ),
+  //       ]
+  //   ),
+  //   Cart(
+  //       shopName: "三只松鼠旗舰店",
+  //       items: [
+  //         CartItem(
+  //             name: "芒果干",
+  //             category: "500g/罐装",
+  //             num: 1,
+  //             price: 99.99,
+  //             imageUrl: "assets/images/head_image4.jpg"
+  //         ),
+  //       ]
+  //   ),
+  //   Cart(
+  //       shopName: "三只松鼠旗舰店",
+  //       items: [
+  //         CartItem(
+  //             name: "开心果",
+  //             category: "500g/罐装",
+  //             num: 1,
+  //             price: 13.99,
+  //             imageUrl: "assets/images/head_image1.jpg"
+  //         ),
+  //         CartItem(
+  //             name: "葡萄干",
+  //             category: "500g/罐装",
+  //             num: 1,
+  //             price: 33.99,
+  //             imageUrl: "assets/images/head_image2.jpg"
+  //         ),
+  //       ]
+  //   ),
+  // ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getCartDatas();
+  }
+
+  void _getCartDatas() async{
+    carts = [];
+    HttpUtil().get_requset(
+      "/shopping-cart/")
+    .then((value){
+      print(value);
+      cart_json.Cart ccarts =cart_json.Cart.fromJson(value.data);
+      for(cart_json.CartData data in ccarts.recordList!){
+        Cart cart = Cart(shopName: data.store!.name!,items: []);
+        carts.add(cart);
+        for(cart_json.CartItem item in data.goods!){
+          cart.items!.add(CartItem(id: item.id!,name: item.name!,
+              imageUrl: item.img,price: item.price));
+        }
+      }
+      setState(() {
+      });
+    })
+    .catchError((error){
+      print(error);
+    })
+    ;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,16 +184,16 @@ class _ShoppingCartPageState extends State<ShoppingCartPage>
                   color: Color(0x99DCDCDC),
                 ),
                 child: Row(
-                  children: const [
-                    Icon(
+                  children: [
+                    const Icon(
                         IconUtil.address,
                       size: 12,
                     ),
                     SizedBox(width: 3),
                     Flexible(
                       child: Text(
-                        "配送至:某地某地某地某地某地某地某地某地",
-                        style: TextStyle(
+                        Provider.of<AddressModel>(context,listen: false).address.toString(),
+                        style:const TextStyle(
                           color: Color(0xFFA9A9A9),
                           fontSize: 11,
                         ),
@@ -223,24 +260,25 @@ class _ShoppingCartPageState extends State<ShoppingCartPage>
           Align(
             alignment: Alignment.centerRight,
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: ()  async{
                 cart_json.CartData data = cart_json.CartData();
-                data.children = [];
+                data.goods = [];
                 for(Cart cart in carts){
                   for(CartItem item in cart.items!){
                     if(item.isSelected!){
-                      data.children!.add(cart_json.CartItem(
-                        id: item.id,shopName: cart.shopName,
-                        goodsName: item.name,img: item.imageUrl,
+                      data.goods!.add(cart_json.CartItem(
+                        id: item.id, name: item.name,img: item.imageUrl,
                         price: item.price,num: item.num
                       ));
                     }
                   }
                 }
-                if(data.children!.isNotEmpty){
-                  Navigator.of(context).push(
+                if(data.goods!.isNotEmpty){
+                  await Navigator.of(context).push(
                     MaterialPageRoute(builder: (context)=>ConfirmOrderPage(data: data)),
                   );
+                  setState(() {
+                  });
                 }
               },
               style: ButtonStyle(
@@ -356,9 +394,24 @@ class _ShoppingCartPageState extends State<ShoppingCartPage>
               margin: const EdgeInsets.only(left: 10,right: 10),
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
-                child: Image.asset(e.imageUrl??defaultImage,
+                // child: Image.asset(e.imageUrl??defaultImage,
+                //   width: 75,
+                //   height: 75,
+                // ),
+                child: CachedNetworkImage(
+                  imageUrl: e.imageUrl!,
                   width: 75,
                   height: 75,
+                  placeholder: (context, url) => Icon(
+                    Icons.image,
+                    color: Colors.grey[300],
+                    // size: MediaQuery.of(context).size.width / 2 - 10,
+                  ),
+                  errorWidget: (context, url, error) => Icon(
+                    Icons.image,
+                    color: Colors.grey[300],
+                    // size: MediaQuery.of(context).size.width / 2 - 10,
+                  ),
                 ),
               ),
             ),
@@ -381,31 +434,33 @@ class _ShoppingCartPageState extends State<ShoppingCartPage>
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      Container(
-                        height: 20,
-                        padding: const EdgeInsets.only(left: 5,right: 5),
-                        margin: const EdgeInsets.only(top: 7,bottom: 7),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          color: Color(0x99DCDCDC),
-                        ),
-                        child: GestureDetector(
-                          child: Text.rich(TextSpan(
-                            text: e.category,
-                            children: const [
-                              WidgetSpan(
-                                alignment: PlaceholderAlignment.middle,
-                                child: Icon(IconUtil.arrowBottom,size: 8,),
-                              )
-                            ],
-                          ),
-                            style: const TextStyle(
-                              fontSize: 11,
-                              color: Color(0xFFA9A9A9),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   height: 20,
+                      //   padding: const EdgeInsets.only(left: 5,right: 5),
+                      //   margin: const EdgeInsets.only(top: 7,bottom: 7),
+                      //   decoration: const BoxDecoration(
+                      //     borderRadius: BorderRadius.all(Radius.circular(8)),
+                      //     color: Color(0x99DCDCDC),
+                      //   ),
+                      //   child: GestureDetector(
+                      //     child: Text.rich(TextSpan(
+                      //       text: e.category,
+                      //       children: const [
+                      //         WidgetSpan(
+                      //           alignment: PlaceholderAlignment.middle,
+                      //           child: Icon(IconUtil.arrowBottom,size: 8,),
+                      //         )
+                      //       ],
+                      //     ),
+                      //       style: const TextStyle(
+                      //         fontSize: 11,
+                      //         color: Color(0xFFA9A9A9),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+
+                      SizedBox(height: 20),
                       Container(
                         height: 15,
                         padding: const EdgeInsets.only(left: 3,right: 3),

@@ -1,8 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:mobile_store/http/HttpUtil.dart';
+import 'package:mobile_store/model/global_model/address_model.dart';
 import 'package:mobile_store/model/product.dart';
+import 'package:mobile_store/pages/shopping_cart_page.dart';
 import 'package:mobile_store/utils/icon_util.dart';
+import 'package:mobile_store/utils/toast_util.dart';
+import 'package:provider/provider.dart';
 
 
 class ProductDetailPage extends StatefulWidget {
@@ -38,19 +44,42 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   void _getProductInfo() async{
-    _data = ProductData(
-      picture: "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
-      name: "三只松鼠",
-      price: 15.99,
-      sales: 799,
-    );
-    loading = true;
-    setState(() {
+
+    HttpUtil().get_param_requset("/goods/detail",
+    params: {
+      "goodId":widget.id
+    }
+    ).then((value){
+      if(value.data['code']==20000){
+        ProductDetail detail = ProductDetail.fromJson(value.data);
+        _data = detail.data!;
+        loading = true;
+        setState(() {
+        });
+      }
+    }).catchError((error){
+      print(error);
     });
+
+    // _data = ProductData(
+    //   picture: "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
+    //   name: "三只松鼠",
+    //   price: 15.99,
+    //   sales: 799,
+    // );
+
   }
 
   // 加入购物车
-  void _addCart(attr, cartNumber, id, context) async {
+  void _addCart() async {
+    HttpUtil().postRequestWithJson(
+      "/shopping-cart/${_data.id}",
+      data: {
+        'num':num
+      }
+    ).catchError((error){
+      print(error);
+    });
   }
 
   @override
@@ -69,29 +98,24 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     sliver: SliverList(
                         delegate: SliverChildListDelegate(
                             <Widget>[
-                          Container(
-                            color: Colors.amber,
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.width - 100.0,
-                            // child: loading
-                            //     ? Swiper(
-                            //   itemBuilder: (BuildContext context, int index) {
-                            //     return Image.network(
-                            //       album[index],
-                            //       fit: BoxFit.fitWidth,
-                            //     );
-                            //   },
-                            //   itemCount: album.length,
-                            //   pagination: const SwiperPagination(
-                            //       builder: DotSwiperPaginationBuilder(
-                            //           size: 6.0,
-                            //           activeSize: 6.0,
-                            //           color: Colors.grey)),
-                            //   autoplay: true,
-                            // )
-                            //     : Container(),
-                          ),
-                        ])),
+                              CachedNetworkImage(
+                                imageUrl: _data.picture!,
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.width - 100.0,
+                                placeholder: (context, url) => Icon(
+                                  Icons.image,
+                                  color: Colors.grey[300],
+                                  size: MediaQuery.of(context).size.width - 100.0,
+                                ),
+                                errorWidget: (context, url, error) => Icon(
+                                  Icons.image,
+                                  color: Colors.grey[300],
+                                  size: MediaQuery.of(context).size.width - 100.0,
+                                ),
+                              ),
+                        ],
+                        ),
+                    ),
                   ),
                   // 标题、价格、销量、产地等信息
                   SliverPadding(
@@ -366,7 +390,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
               ),
               InkWell(
-                onTap: (){},
+                onTap: (){
+                  // Navigator.of(context).push(
+                  //     MaterialPageRoute(builder: (context)=>const ShoppingCartPage())
+                  // );
+                },
                 child:Container(
                   width: 35,
                   margin: const EdgeInsets.only(left: 10,right: 15,top: 5,bottom: 5),
@@ -389,7 +417,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ),
               Expanded(
                 child: InkWell(
-                  onTap: (){},
+                  onTap: (){
+                    _addCart();
+                    ToastUtil.makeToast("加入购物车成功");
+                    // Navigator.of(context).pop();
+                  },
                   child: Container(
                     height: double.infinity,
                     alignment: Alignment.center,
@@ -410,7 +442,21 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ),
               Expanded(
                 child: InkWell(
-                  onTap: (){},
+                  onTap: (){
+                    HttpUtil().postRequestWithJson(
+                      "/goods/buy",
+                      data: {
+                        'address':Provider.of<AddressModel>(context,listen: false).address,
+                        'goods':{
+                          'goodId':_data.id,
+                          'num':num
+                        }
+                      }
+                    ).catchError((error){
+                      print(error);
+                    });
+                    ToastUtil.makeToast("购买成功");
+                  },
                   child: Container(
                     height: double.infinity,
                     alignment: Alignment.center,

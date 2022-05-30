@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_store/model/product.dart';
+import 'package:mobile_store/utils/toast_util.dart';
 
+import '../http/HttpUtil.dart';
+import '../pages/prtoduct_details_page.dart';
 import '../utils/icon_util.dart';
 
 class ProductListItem extends StatefulWidget {
@@ -20,7 +23,11 @@ class _ProductListItemState extends State<ProductListItem> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context)=>ProductDetailPage(id:widget.data.id))
+        );
+      },
       child: widget.multiple?Container(
         width: screenWidth-10,
         color: Colors.amberAccent,
@@ -92,7 +99,10 @@ class _ProductListItemState extends State<ProductListItem> {
                         ),
                         const Expanded(child: SizedBox()),
                         InkWell(
-                          onTap: (){},
+                          onTap: (){
+                            _addCart(widget.data.id!);
+                            ToastUtil.makeToast("已成功加入购物车");
+                          },
                           child: ClipRRect(
                             borderRadius: const BorderRadius.all(Radius.circular(90)),
                             child: Container(
@@ -195,15 +205,16 @@ class _ProductListItemState extends State<ProductListItem> {
       ),
     );
   }
+  // 加入购物车
+  void _addCart(int? id) async {
+    HttpUtil().postRequestWithJson(
+        "/shopping-cart/${id}",
+        data: {
+          'num':1
+        }
+    ).catchError((error){
+      print(error);
+    });
+  }
+
 }
-
-
-// class ProductListItem extends StatelessWidget {
-//
-//   const ProductListItem({Key? key, required this.url, required this.name, required this.id, required this.price,required this.multiple}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     ;
-//   }
-// }

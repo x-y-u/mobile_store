@@ -23,6 +23,10 @@ class AddressData{
 
   String? phone;
 
+  String toString(){
+    return province! + city! + area! + name!;
+  }
+
   AddressData({this.id, this.userId, this.name = "", this.isDefault = false, this.province = "",
       this.city = "", this.area = "", this.detail = "", this.phone = ""});
 }

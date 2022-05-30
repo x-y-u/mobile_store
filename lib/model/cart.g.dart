@@ -7,47 +7,47 @@ part of 'cart.dart';
 // **************************************************************************
 
 Cart _$CartFromJson(Map<String, dynamic> json) => Cart(
-      code: json['code'] as int?,
-      data: json['data'] == null
-          ? null
-          : CartData.fromJson(json['data'] as Map<String, dynamic>),
-      msg: json['msg'] as String?,
+      recordList: (json['recordList'] as List<dynamic>?)
+          ?.map((e) => CartData.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      count: json['count'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$CartToJson(Cart instance) => <String, dynamic>{
-      'code': instance.code,
-      'data': instance.data,
-      'msg': instance.msg,
+      'recordList': instance.recordList,
+      'count': instance.count,
     };
 
 CartData _$CartDataFromJson(Map<String, dynamic> json) => CartData(
-      id: json['Id'] as int?,
-      children: (json['children'] as List<dynamic>?)
+      id: json['id'] as int?,
+      num: json['num'] as int? ?? 0,
+      store: json['store'] == null
+          ? null
+          : Store.fromJson(json['store'] as Map<String, dynamic>),
+      goods: (json['goods'] as List<dynamic>?)
           ?.map((e) => CartItem.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$CartDataToJson(CartData instance) => <String, dynamic>{
-      'Id': instance.id,
-      'Children': instance.children,
+      'id': instance.id,
+      'store': instance.store,
+      'goods': instance.goods,
+      'num': instance.num,
     };
 
 CartItem _$CartItemFromJson(Map<String, dynamic> json) => CartItem(
       id: json['id'] as int?,
-      goodsName: json['goodsName'] as String?,
-      parentId: json['parentId'] as int?,
-      img: json['Img'] as String?,
+      name: json['name'] as String?,
+      img: json['picture'] as String?,
       num: json['num'] as int?,
       price: (json['price'] as num?)?.toDouble(),
-      shopName: json['shopName'] as String?,
     );
 
 Map<String, dynamic> _$CartItemToJson(CartItem instance) => <String, dynamic>{
       'id': instance.id,
-      'goodsName': instance.goodsName,
-      'parentId': instance.parentId,
-      'Img': instance.img,
-      'shopName': instance.shopName,
+      'name': instance.name,
+      'picture': instance.img,
       'price': instance.price,
       'num': instance.num,
     };
