@@ -66,14 +66,19 @@ class _MinePageState extends State<MinePage>
     },
   ];
   @override
-  void initState() async{
+  void initState(){
     // TODO: implement initState
     super.initState();
+    _initLogin();
+  }
+
+  void _initLogin() async{
     bool isLogin = await LoginUtil.getIsLogin();
     if(isLogin){
       Provider.of<UserStateModel>(context).login();
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

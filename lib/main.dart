@@ -16,12 +16,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'home_page.dart';
 
 void main() async{
-
-  bool isLogin = await LoginUtil.getIsLogin();
-  if(isLogin){
-    login();
-  }
-
   runApp(
     MultiProvider(
       providers: [
@@ -29,9 +23,14 @@ void main() async{
           return UserStateModel();
         }),
       ],
-      child: MyApp(isLogin: isLogin),
+      child: const MyApp(),
     ),
   );
+
+  bool isLogin = await LoginUtil.getIsLogin();
+  if(isLogin){
+    login();
+  }
 
   if (Platform.isAndroid) {
     // 设置沉浸式状态栏
@@ -43,8 +42,7 @@ void main() async{
 
 class MyApp extends StatelessWidget {
 
-  bool isLogin;
-  MyApp({Key? key,this.isLogin = false}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
