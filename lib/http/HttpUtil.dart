@@ -15,7 +15,7 @@ class HttpUtil{
 
   init(){
     BaseOptions baseOptions = BaseOptions(
-      baseUrl: "http://192.168.188.254:8080",
+      baseUrl: "http://192.168.72.254:8080",
       connectTimeout: 5000,
       responseType: ResponseType.json,
     );

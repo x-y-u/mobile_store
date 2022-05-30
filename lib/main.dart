@@ -16,6 +16,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'home_page.dart';
 
 void main() async{
+
+  bool isLogin = await LoginUtil.getIsLogin();
+  if(isLogin){
+    login();
+  }
+
   runApp(
     MultiProvider(
       providers: [
@@ -23,10 +29,48 @@ void main() async{
           return UserStateModel();
         }),
       ],
-      child: const MyApp(),
+      child: MyApp(isLogin: isLogin),
     ),
   );
 
+  if (Platform.isAndroid) {
+    // 设置沉浸式状态栏
+    SystemUiOverlayStyle systemUiOverlayStyle =
+    const SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  }
+}
+
+class MyApp extends StatelessWidget {
+
+  bool isLogin;
+  MyApp({Key? key,this.isLogin = false}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        highlightColor: Colors.transparent, // 透明色
+        splashColor: Colors.transparent, // 透明色
+      ),
+      initialRoute: 'home',
+      routes: <String, WidgetBuilder>{
+        'home': (BuildContext context) => const HomePage(),
+        'login': (BuildContext context) => const SettingPage(),
+        'setting': (BuildContext context) => const SettingPage(),
+        'account_setting': (BuildContext context) => const AccountSettingPage(),
+        'add_address': (BuildContext context) => const AddAddressPage(),
+        'address_list': (BuildContext context) => const AddressListPage(),
+      },
+      // home: const HomePage(),
+    );
+  }
+}
+
+void login() async{
   try{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? account = prefs.getString(LoginUtil.USER_ACCOUNT);
@@ -40,11 +84,11 @@ void main() async{
             "password":password
           }
       ).then((result){
-        Map<String,dynamic> map = jsonDecode(result.data);
-        print(map);
-        if(map['code']==20000){//登录成功的操作
-          LoginUtil.loginNewAccount(account, password);
+        print(result.data);
+        if(result.data['code']==20000){//登录成功的操作
+          print("登录成功");
         }else{
+          LoginUtil.logout();
         }
       }).catchError((error){
         print(error);
@@ -52,37 +96,6 @@ void main() async{
     }
   }catch(error){
     print(error);
-  }
-
-  if (Platform.isAndroid) {
-    // 设置沉浸式状态栏
-    SystemUiOverlayStyle systemUiOverlayStyle =
-    const SystemUiOverlayStyle(statusBarColor: Colors.transparent);
-    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
-  }
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        highlightColor: Colors.transparent, // 透明色
-        splashColor: Colors.transparent, // 透明色
-      ),
-      routes: <String, WidgetBuilder>{
-        'setting': (BuildContext context) => const SettingPage(),
-        'account_setting': (BuildContext context) => const AccountSettingPage(),
-        'add_address': (BuildContext context) => const AddAddressPage(),
-        'address_list': (BuildContext context) => const AddressListPage(),
-      },
-      home: const HomePage(),
-    );
   }
 }
 

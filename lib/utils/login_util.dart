@@ -25,4 +25,10 @@ class LoginUtil{
     prefs.setBool(IS_LOGIN, false);
   }
 
+  static Future<bool> getIsLogin() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLogin = await prefs.getBool(IS_LOGIN)??false;
+    return isLogin;
+  }
+
 }

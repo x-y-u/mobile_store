@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_store/model/global_model/user_state.dart';
 import 'package:mobile_store/model/product.dart';
 import 'package:mobile_store/pages/prtoduct_details_page.dart';
 import 'package:mobile_store/utils/icon_util.dart';
+import 'package:mobile_store/utils/login_util.dart';
+import 'package:provider/provider.dart';
 
 import 'order_page.dart';
 
@@ -14,10 +17,13 @@ class MinePage extends StatefulWidget {
 
 class _MinePageState extends State<MinePage>
     with AutomaticKeepAliveClientMixin{
+
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
+
   late final double _screenWidth = MediaQuery.of(context).size.width;
+
   List<Map> options1 = [
     {
       "icon":IconUtil.unpaid,
@@ -60,10 +66,13 @@ class _MinePageState extends State<MinePage>
     },
   ];
   @override
-  void initState() {
+  void initState() async{
     // TODO: implement initState
     super.initState();
-    // _screenWidth = MediaQuery.of(context).size.width;
+    bool isLogin = await LoginUtil.getIsLogin();
+    if(isLogin){
+      Provider.of<UserStateModel>(context).login();
+    }
   }
   @override
   Widget build(BuildContext context) {

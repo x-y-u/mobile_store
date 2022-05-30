@@ -3,15 +3,15 @@
 import 'package:flutter/cupertino.dart';
 
 class UserStateModel with ChangeNotifier{
-  bool isLogin = false;
+  bool _isLogin = false;
 
   void login(){
-    isLogin = true;
+    _isLogin = true;
     notifyListeners();
   }
 
   void logout(){
-    isLogin = false;
+    _isLogin = false;
     notifyListeners();
   }
 }
