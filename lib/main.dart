@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_store/pages/account_settingh_page.dart';
-import 'package:mobile_store/pages/prtoduct_details.dart';
+import 'package:mobile_store/pages/add_address_page.dart';
+import 'package:mobile_store/pages/prtoduct_details_page.dart';
 import 'package:mobile_store/pages/setting_page.dart';
 
 import 'home_page.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         'setting': (BuildContext context) => const SettingPage(),
         'account_setting': (BuildContext context) => const AccountSettingPage(),
+        'add_address': (BuildContext context) => const AddAddressPage(),
       },
       home: const HomePage(),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_store/model/product.dart';
-import 'package:mobile_store/pages/prtoduct_details.dart';
+import 'package:mobile_store/pages/prtoduct_details_page.dart';
 import 'package:mobile_store/utils/icon_util.dart';
 
 import 'order_page.dart';
@@ -12,7 +12,11 @@ class MinePage extends StatefulWidget {
   State<MinePage> createState() => _MinePageState();
 }
 
-class _MinePageState extends State<MinePage> {
+class _MinePageState extends State<MinePage>
+    with AutomaticKeepAliveClientMixin{
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
   late final double _screenWidth = MediaQuery.of(context).size.width;
   List<Map> options1 = [
     {
@@ -160,7 +164,12 @@ class _MinePageState extends State<MinePage> {
                 );
               },
                 child: Text("商品详情"),
-              )
+              ),
+              ElevatedButton(onPressed: (){
+                Navigator.of(context).pushNamed('add_map');
+              },
+                child: Text("添加地址"),
+              ),
             ],
           ),
           Align(

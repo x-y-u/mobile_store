@@ -10,7 +10,11 @@ class ShoppingCartPage extends StatefulWidget {
   State<ShoppingCartPage> createState() => _ShoppingCartPageState();
 }
 
-class _ShoppingCartPageState extends State<ShoppingCartPage> {
+class _ShoppingCartPageState extends State<ShoppingCartPage>
+    with AutomaticKeepAliveClientMixin{
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
   late final double _screenWidth = MediaQuery.of(context).size.width;
   String defaultImage = "assets/images/head_image1.jpg";
   bool _isAllSelected = false;

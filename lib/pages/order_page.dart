@@ -83,11 +83,11 @@ class _OrderPageState extends State<OrderPage>
 
   Widget _buildTopBar(){
     return Container(
-      padding: EdgeInsets.only(top: AppBar().preferredSize.height),
+      padding: const EdgeInsets.only(top: 30),
       color: Colors.redAccent,
       child: Container(
-        height: 50,
-        padding: const EdgeInsets.only(left: 10,right: 10),
+        height: 45,
+        padding: const EdgeInsets.only(right: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -95,13 +95,18 @@ class _OrderPageState extends State<OrderPage>
               onPressed: (){
                 Navigator.of(context).pop();
               },
-              icon: Icon(IconUtil.arrowLeft),
+              icon: const Icon(IconUtil.arrowLeft),
               iconSize: 20,
               color: Colors.black,
             ),
             Expanded(
               child: Container(
-                margin: const EdgeInsets.only(left: 20,right: 20,top: 10,bottom: 10),
+                margin: const EdgeInsets.only(left: 15,right: 30,top: 5,bottom: 5),
+                padding: const EdgeInsets.only(left: 10,top: 3,bottom: 3,right: 10),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(25)),
+                  color: Colors.white,
+                ),
                 child: TextField(
                   decoration: InputDecoration(
                     icon: Icon(IconUtil.search,
@@ -119,7 +124,7 @@ class _OrderPageState extends State<OrderPage>
                 ),
               ),
             ),
-            Padding(padding: const EdgeInsets.only(right: 15),
+            Padding(padding: const EdgeInsets.only(right: 10),
               child: GestureDetector(
                 child: const Text("筛选",
                   style: TextStyle(
@@ -149,6 +154,7 @@ class _OrderPageState extends State<OrderPage>
     return TabBar(
       labelColor: Colors.black,
       controller: _controller,
+      indicatorColor: Colors.redAccent,
       tabs: options.map((e) =>
           Tab(
             text: e,

@@ -15,7 +15,11 @@ class ShoppingPage extends StatefulWidget {
   State<ShoppingPage> createState() => _ShoppingPageState();
 }
 
-class _ShoppingPageState extends State<ShoppingPage> {
+class _ShoppingPageState extends State<ShoppingPage>
+    with AutomaticKeepAliveClientMixin{
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
   int _index = 0;
 
   bool _multiple = true;
