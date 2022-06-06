@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_store/utils/icon_util.dart';
-
 import '../model/order.dart';
 
 class OrderListItem extends StatefulWidget {
 
-  final OrderData data;
+  final OrderItem data;
 
   const OrderListItem({Key? key,required this.data}) : super(key: key);
 
@@ -22,7 +21,7 @@ class _OrderListItemState extends State<OrderListItem> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    totalPrice = widget.data.price! * widget.data.num!;
+    totalPrice = widget.data.totalPrice!;
   }
 
   @override
@@ -85,7 +84,7 @@ class _OrderListItemState extends State<OrderListItem> {
                   ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     child: CachedNetworkImage(
-                      imageUrl: widget.data.imgUrl!,
+                      imageUrl: (widget.data.goods?.picture)!,
                       width: 100,
                       height: 100,
                       placeholder: (context, url) => Icon(
@@ -105,7 +104,7 @@ class _OrderListItemState extends State<OrderListItem> {
                       alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.only(left: 5,right: 30),
                       child: Text(
-                        widget.data.productName!,
+                        (widget.data.goods?.name)!,
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.black,
@@ -142,7 +141,7 @@ class _OrderListItemState extends State<OrderListItem> {
                               ]
                           ),
                         ),
-                        Text("共${widget.data.num}件",
+                        Text("共${widget.data.goods?.num}件",
                           style: TextStyle(
                             fontSize: 10,
                             color: Colors.grey.shade600,

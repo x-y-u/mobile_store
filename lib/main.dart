@@ -9,8 +9,6 @@ import 'package:mobile_store/model/global_model/user_state.dart';
 import 'package:mobile_store/pages/account_settingh_page.dart';
 import 'package:mobile_store/pages/add_address_page.dart';
 import 'package:mobile_store/pages/address_list_page.dart';
-import 'package:mobile_store/pages/forget_password.dart';
-import 'package:mobile_store/pages/register_page.dart';
 import 'package:mobile_store/pages/setting_page.dart';
 import 'package:mobile_store/utils/login_util.dart';
 import 'package:provider/provider.dart';

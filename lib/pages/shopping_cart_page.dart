@@ -373,7 +373,9 @@ class _ShoppingCartPageState extends State<ShoppingCartPage>
 
   Widget _buildOrderItem(CartItem e){
     return InkWell(
-      onTap: (){},
+      onTap: (){
+
+      },
       child: Container(
         height: 115,
         padding: const EdgeInsets.only(top: 10),

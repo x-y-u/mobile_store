@@ -14,7 +14,7 @@ class OrderPage extends StatefulWidget {
 class _OrderPageState extends State<OrderPage>
     with SingleTickerProviderStateMixin{
 
-  late List<OrderData> _datas;
+  late List<OrderItem> _datas;
 
   bool loading = false;
 
@@ -34,31 +34,28 @@ class _OrderPageState extends State<OrderPage>
     super.initState();
     _controller = TabController(length: options.length, vsync: this);
     _controller.index = widget.index;
-    _getDatas(_controller.index);
+    // _getDatas(_controller.index);
   }
 
-  void _getDatas(int index) async{
-    _datas = [
-      OrderData(storeName: "三只松鼠",
-        imgUrl: "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
-        state: 1, productName: "三只松鼠", price: 15.99, num: 2,),
-      OrderData(storeName: "三只松鼠",
-        imgUrl: "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
-        state: 1, productName: "三只松鼠", price: 15.99, num: 2,),
-      OrderData(storeName: "三只松鼠",
-        imgUrl: "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
-        state: 1, productName: "三只松鼠", price: 15.99, num: 2,),
-      OrderData(storeName: "三只松鼠",
-        imgUrl: "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
-        state: 1, productName: "三只松鼠", price: 15.99, num: 2,),
-      OrderData(storeName: "三只松鼠",
-        imgUrl: "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
-        state: 1, productName: "三只松鼠", price: 15.99, num: 2,),
-    ];
-    loading = true;
-    setState(() {
-    });
-  }
+  // void _getDatas(int index) async{
+  //
+  //   _datas = [
+  //     OrderItem(orderId: 18,goodId: 6,state: 3,totalPrice: 239.92,storeId: 2,
+  //   storeImg: "https://g-search1.alicdn.com/img/bao/uploaded/i4//27/52/TB16683brwTMeJjSszfSutbtFXa.jpg_140x140Q90.jpg_.webp",
+  //   storeName: "Muzly 韩系女装",
+  //   goods: Goods(
+  //   id: 6,
+  //   name: "韩国chic夏季新品气质显白小众盘扣改良旗袍裙收腰显瘦短袖连衣裙",
+  //   picture: "https://g-search1.alicdn.com/img/bao/uploaded/i4/i1/919022537/O1CN013zdDKy1UbzZdAvxZJ_!!919022537.jpg_320x320Q90.jpg_.webp",
+  //   price: 59.98,
+  //   num: 4,
+  //   ),
+  // ),
+  //   ];
+  //   loading = true;
+  //   setState(() {
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
