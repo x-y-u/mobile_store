@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
             onTap: _onChangePage,
             // elevation: 5,
             // backgroundColor: const Color(0xFFFFFFFF),
-            selectedItemColor: const Color(0xFF1DAFC2),
+            selectedItemColor: Colors.redAccent,
             unselectedItemColor: const Color(0xFF808080),
             selectedFontSize: 12,
             unselectedFontSize: 12,

@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:mobile_store/http/HttpUtil.dart';
 import 'package:mobile_store/model/global_model/address_model.dart';
 import 'package:mobile_store/model/product.dart';
@@ -61,20 +60,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       print(error);
     });
 
-    // _data = ProductData(
-    //   picture: "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
-    //   name: "三只松鼠",
-    //   price: 15.99,
-    //   sales: 799,
-    // );
-
   }
 
   // 加入购物车
   void _addCart() async {
-    HttpUtil().postRequestWithJson(
+    HttpUtil().get_param_requset(
       "/shopping-cart/${_data.id}",
-      data: {
+      method: 'put',
+      params: {
         'num':num
       }
     ).catchError((error){

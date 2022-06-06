@@ -30,13 +30,15 @@ class _ProductListItemState extends State<ProductListItem> {
       },
       child: widget.multiple?Container(
         width: screenWidth-10,
-        color: Colors.amberAccent,
+        // decoration: BoxDecoration(
+        //   border: Border.all(color: Colors.grey.shade500,width: 0.5)
+        // ),
         margin: const EdgeInsets.all(5),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
               child: CachedNetworkImage(
                 imageUrl: widget.data.picture!,
                 width: (screenWidth-10)/2.5,
@@ -130,7 +132,7 @@ class _ProductListItemState extends State<ProductListItem> {
         ),
       ) :Container(
         width: (screenWidth-20)/2,
-        height: (screenWidth-20)/1.4,
+        height: (screenWidth-20)/1.3,
         margin: const EdgeInsets.all(5),
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -171,7 +173,7 @@ class _ProductListItemState extends State<ProductListItem> {
                     ),
                     Container(
                       height: 30,
-                      margin: const EdgeInsets.only(bottom: 5,top: 5),
+                      margin: const EdgeInsets.only(bottom: 3),
                       alignment: Alignment.centerLeft,
                       child: Text.rich(
                         TextSpan(
@@ -207,9 +209,10 @@ class _ProductListItemState extends State<ProductListItem> {
   }
   // 加入购物车
   void _addCart(int? id) async {
-    HttpUtil().postRequestWithJson(
+    HttpUtil().get_param_requset(
         "/shopping-cart/${id}",
-        data: {
+        method: 'put',
+        params: {
           'num':1
         }
     ).catchError((error){

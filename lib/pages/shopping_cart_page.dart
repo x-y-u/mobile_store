@@ -4,6 +4,7 @@ import 'package:mobile_store/bean/cartBean.dart';
 import 'package:mobile_store/http/HttpUtil.dart';
 import 'package:mobile_store/model/cart.dart' as cart_json;
 import 'package:mobile_store/pages/confirm_order.dart';
+import 'package:mobile_store/pages/prtoduct_details_page.dart';
 import 'package:mobile_store/utils/icon_util.dart';
 import 'package:mobile_store/utils/no_ripple_scroll_behavior.dart';
 import 'package:provider/provider.dart';
@@ -27,70 +28,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage>
   bool _isAllSelected = false;
   double _totalPrice = 0;
   late List<Cart> carts;
-  // List<Cart> carts = [
-  //   Cart(
-  //     shopName: "三只松鼠旗舰店",
-  //     items: [
-  //       CartItem(
-  //         name: "开心果",
-  //         category: "500g/罐装",
-  //         num: 1,
-  //         price: 13.99,
-  //         imageUrl: "assets/images/head_image1.jpg"
-  //       ),
-  //       CartItem(
-  //           name: "葡萄干",
-  //           category: "500g/罐装",
-  //           num: 1,
-  //           price: 33.99,
-  //           imageUrl: "assets/images/head_image2.jpg"
-  //       ),
-  //     ]
-  //   ),
-  //   Cart(
-  //       shopName: "三只松鼠旗舰店",
-  //       items: [
-  //         CartItem(
-  //             name: "黄桃干",
-  //             category: "500g/罐装",
-  //             num: 1,
-  //             price: 45.99,
-  //             imageUrl: "assets/images/head_image3.jpg"
-  //         ),
-  //       ]
-  //   ),
-  //   Cart(
-  //       shopName: "三只松鼠旗舰店",
-  //       items: [
-  //         CartItem(
-  //             name: "芒果干",
-  //             category: "500g/罐装",
-  //             num: 1,
-  //             price: 99.99,
-  //             imageUrl: "assets/images/head_image4.jpg"
-  //         ),
-  //       ]
-  //   ),
-  //   Cart(
-  //       shopName: "三只松鼠旗舰店",
-  //       items: [
-  //         CartItem(
-  //             name: "开心果",
-  //             category: "500g/罐装",
-  //             num: 1,
-  //             price: 13.99,
-  //             imageUrl: "assets/images/head_image1.jpg"
-  //         ),
-  //         CartItem(
-  //             name: "葡萄干",
-  //             category: "500g/罐装",
-  //             num: 1,
-  //             price: 33.99,
-  //             imageUrl: "assets/images/head_image2.jpg"
-  //         ),
-  //       ]
-  //   ),
-  // ];
 
   @override
   void initState() {
@@ -101,6 +38,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage>
 
   void _getCartDatas() async{
     carts = [];
+
     HttpUtil().get_requset(
       "/shopping-cart/")
     .then((value){
@@ -111,7 +49,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage>
         carts.add(cart);
         for(cart_json.CartItem item in data.goods!){
           cart.items!.add(CartItem(id: item.id!,name: item.name!,
-              imageUrl: item.img,price: item.price));
+              imageUrl: item.img,price: item.price,num: item.num));
         }
       }
       setState(() {
@@ -286,7 +224,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage>
                   const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25)),),
                 ),
                 padding: MaterialStateProperty.all(const EdgeInsets.only(left: 23,right: 23)),
-                backgroundColor: MaterialStateProperty.all(const Color(0xFFed154f)),
+                backgroundColor: MaterialStateProperty.all(Colors.redAccent),
                 elevation: MaterialStateProperty.all(3)
               ),
               child: const Text(
@@ -374,7 +312,9 @@ class _ShoppingCartPageState extends State<ShoppingCartPage>
   Widget _buildOrderItem(CartItem e){
     return InkWell(
       onTap: (){
-
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context)=>ProductDetailPage(id:e.id))
+        );
       },
       child: Container(
         height: 115,
@@ -436,32 +376,6 @@ class _ShoppingCartPageState extends State<ShoppingCartPage>
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      // Container(
-                      //   height: 20,
-                      //   padding: const EdgeInsets.only(left: 5,right: 5),
-                      //   margin: const EdgeInsets.only(top: 7,bottom: 7),
-                      //   decoration: const BoxDecoration(
-                      //     borderRadius: BorderRadius.all(Radius.circular(8)),
-                      //     color: Color(0x99DCDCDC),
-                      //   ),
-                      //   child: GestureDetector(
-                      //     child: Text.rich(TextSpan(
-                      //       text: e.category,
-                      //       children: const [
-                      //         WidgetSpan(
-                      //           alignment: PlaceholderAlignment.middle,
-                      //           child: Icon(IconUtil.arrowBottom,size: 8,),
-                      //         )
-                      //       ],
-                      //     ),
-                      //       style: const TextStyle(
-                      //         fontSize: 11,
-                      //         color: Color(0xFFA9A9A9),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-
                       SizedBox(height: 20),
                       Container(
                         height: 15,

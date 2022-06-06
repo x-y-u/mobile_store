@@ -82,6 +82,7 @@ class _MinePageState extends State<MinePage>
       print(isLogin);
       Provider.of<UserStateModel>(context,listen: false).login();
       setState(() {
+
       });
     }
   }
@@ -115,15 +116,16 @@ class _MinePageState extends State<MinePage>
                         :const Icon(Icons.image),
                   ),
                   title: Text(Provider.of<UserStateModel>(context,listen: false).isLogin
-                      ?"一名用户":"点击登录"
+                      ?"chengzige":"点击登录"
                   ),
-                  subtitle: const Text("content"),
+                  subtitle: Provider.of<UserStateModel>(context,listen: false).isLogin
+                      ?Text("content"):SizedBox(),
                 ),
               ),
               Container(
                 height: 105.5,
                 width: _screenWidth-20,
-                margin: const EdgeInsets.only(left: 10,top: 15),
+                margin: const EdgeInsets.only(left: 10,top: 20),
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   color: Colors.white,
@@ -196,32 +198,7 @@ class _MinePageState extends State<MinePage>
                   ],
                 ),
               ),
-              ElevatedButton(onPressed: (){
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context)=>ProductDetailPage(id:1))
-                );
-              },
-                child: Text("商品详情"),
-              ),
-              ElevatedButton(onPressed: (){
-                Navigator.of(context).pushNamed('add_address');
-              },
-                child: Text("添加地址"),
-              ),
-              ElevatedButton(onPressed: (){
-                Navigator.of(context).pushNamed('address_list');
-              },
-                child: Text("地址列表"),
-              ),
-              ElevatedButton(onPressed: (){
-                HttpUtil().get_requset("/user-auth/test")
-                    .then((value){
-                  print(value.data);
 
-                });
-              },
-                child: Text("登陆状态"),
-              ),
             ],
           ),
           Align(

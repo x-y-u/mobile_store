@@ -80,22 +80,19 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      bottom: false,
-      child: Scaffold(
-        backgroundColor: Colors.grey.shade200,
-        appBar: _buildAppBar(),
-        body: ScrollConfiguration(
-          behavior: NoRippleScrollBehavior(),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                _buildContent1(),
-                _buildContent2(),
-                _buildContent3(),
-                _buildLogoutButton(),
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: Colors.grey.shade200,
+      appBar: _buildAppBar(),
+      body: ScrollConfiguration(
+        behavior: NoRippleScrollBehavior(),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _buildContent1(),
+              _buildContent2(),
+              _buildContent3(),
+              _buildLogoutButton(),
+            ],
           ),
         ),
       ),
@@ -104,9 +101,10 @@ class _SettingPageState extends State<SettingPage> {
 
   PreferredSizeWidget _buildAppBar(){
     return PreferredSize(
-      preferredSize: Size(_screenWidth,60),
+      preferredSize: Size(_screenWidth,50),
       child: Container(
         color: Colors.redAccent,
+        padding: const EdgeInsets.only(top: 30),
         child: Stack(
           children: [
             Align(
@@ -117,7 +115,7 @@ class _SettingPageState extends State<SettingPage> {
                 },
                 icon: const Icon(IconUtil.arrowLeft),
                 iconSize: 18,
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
             const Align(
@@ -125,7 +123,7 @@ class _SettingPageState extends State<SettingPage> {
               child: Text("账户设置",
                 style: TextStyle(
                     fontSize: 18,
-                    color: Colors.black
+                    color: Colors.white
                 ),
               ),
             )

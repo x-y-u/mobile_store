@@ -37,26 +37,6 @@ class _OrderPageState extends State<OrderPage>
     // _getDatas(_controller.index);
   }
 
-  // void _getDatas(int index) async{
-  //
-  //   _datas = [
-  //     OrderItem(orderId: 18,goodId: 6,state: 3,totalPrice: 239.92,storeId: 2,
-  //   storeImg: "https://g-search1.alicdn.com/img/bao/uploaded/i4//27/52/TB16683brwTMeJjSszfSutbtFXa.jpg_140x140Q90.jpg_.webp",
-  //   storeName: "Muzly 韩系女装",
-  //   goods: Goods(
-  //   id: 6,
-  //   name: "韩国chic夏季新品气质显白小众盘扣改良旗袍裙收腰显瘦短袖连衣裙",
-  //   picture: "https://g-search1.alicdn.com/img/bao/uploaded/i4/i1/919022537/O1CN013zdDKy1UbzZdAvxZJ_!!919022537.jpg_320x320Q90.jpg_.webp",
-  //   price: 59.98,
-  //   num: 4,
-  //   ),
-  // ),
-  //   ];
-  //   loading = true;
-  //   setState(() {
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

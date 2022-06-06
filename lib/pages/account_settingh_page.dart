@@ -13,61 +13,59 @@ class _AccountSettingPageState extends State<AccountSettingPage> {
   late final double _screenWidth = MediaQuery.of(context).size.width;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      bottom: false,
-      child: Scaffold(
-        appBar: _buildAppBar(),
-        body: Column(
-          children: [
-            Container(
-              height: 75,
-              color: Colors.white,
-              child: InkWell(
-                onTap: (){},
-                child: Row(
-                  children: [
-                    const SizedBox(width: 12),
-                    const Expanded(
-                      child: Text("头像",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
+    return Scaffold(
+      appBar: _buildAppBar(),
+      body: Column(
+        children: [
+          Container(
+            height: 75,
+            color: Colors.white,
+            child: InkWell(
+              onTap: (){},
+              child: Row(
+                children: [
+                  const SizedBox(width: 12),
+                  const Expanded(
+                    child: Text("头像",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
                       ),
                     ),
-                    ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(90)),
-                      child: Image.asset("assets/images/head_image1.jpg",width: 55,height: 55,),
-                    ),
-                    const SizedBox(width: 5),
-                    Icon(IconUtil.arrowRight,
-                      size: 16,
-                      color: Colors.grey.shade500,
-                    ),
-                    const SizedBox(width: 10),
-                  ],
-                ),
+                  ),
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(90)),
+                    child: Image.asset("assets/images/head_image1.jpg",width: 55,height: 55,),
+                  ),
+                  const SizedBox(width: 5),
+                  Icon(IconUtil.arrowRight,
+                    size: 16,
+                    color: Colors.grey.shade500,
+                  ),
+                  const SizedBox(width: 10),
+                ],
               ),
             ),
-            _buildDevider(),
-            _buildSettingItem("用户名", "一名不愿透漏姓名的用户", false, () { }),
-            _buildDevider(),
-            _buildSettingItem("昵称", "一名不愿透漏姓名的用户", true, () { }),
-            _buildDevider(),
-            _buildSettingItem("性别", "保密", true, () { }),
-            _buildDevider(),
-            _buildSettingItem("出生日期", "", true, () { })
-          ],
-        ),
+          ),
+          _buildDevider(),
+          _buildSettingItem("用户名", "chengzige", false, () { }),
+          _buildDevider(),
+          _buildSettingItem("昵称", "一名不愿透漏姓名的用户", true, () { }),
+          _buildDevider(),
+          _buildSettingItem("性别", "保密", true, () { }),
+          _buildDevider(),
+          _buildSettingItem("出生日期", "", true, () { })
+        ],
       ),
     );
   }
 
   PreferredSizeWidget _buildAppBar(){
     return PreferredSize(
-      preferredSize: Size(_screenWidth,60),
+      preferredSize: Size(_screenWidth,50),
       child: Container(
-        color: Colors.white,
+        color: Colors.redAccent,
+        padding: const EdgeInsets.only(top: 30),
         child: Stack(
           children: [
             Align(
@@ -78,7 +76,7 @@ class _AccountSettingPageState extends State<AccountSettingPage> {
                 },
                 icon: const Icon(IconUtil.arrowLeft),
                 iconSize: 18,
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
             const Align(
@@ -86,7 +84,7 @@ class _AccountSettingPageState extends State<AccountSettingPage> {
               child: Text("个人信息",
                 style: TextStyle(
                     fontSize: 18,
-                    color: Colors.black
+                    color: Colors.white
                 ),
               ),
             )
